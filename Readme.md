@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Лазаренко](https://up.htmlacademy.ru/ecmascript/5/user/254439).
-* Наставник: `Неизвестно`.
+* Наставник: [Варя Степанова](https://up.htmlacademy.ru/ecmascript/5/user/148462).
 
 ---
 
