@@ -30,7 +30,6 @@ let current = 0;
 selectSlide(screens[current]);
 
 const select = (index) => {
-  /* index = (index < 0) ? 0 : (index >= screens.length) ? (screens.length - 1) : index; */
   if (index < 0) {
     index = 0;
   } else if (index >= screens.length) {
