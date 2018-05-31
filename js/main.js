@@ -25,12 +25,18 @@ const selectSlide = (element) => {
   mainScreen.appendChild(element.cloneNode(true));
 };
 
-selectSlide(screens[0]);
-
 let current = 0;
 
+selectSlide(screens[current]);
+
 const select = (index) => {
-  index = (index < 0) ? 0 : (index >= screens.length) ? (screens.length - 1) : index;
+  /* index = (index < 0) ? 0 : (index >= screens.length) ? (screens.length - 1) : index; */
+  if (index < 0) {
+    index = 0;
+  } else if (index >= screens.length) {
+    index = screens.length - 1;
+  }
+
   current = index;
   selectSlide(screens[current]);
 };
@@ -53,7 +59,6 @@ document.body.appendChild(miceArrows);
 
 const arrowClickLeft = miceArrows.children[1];
 const arrowClickRight = miceArrows.children[2];
-console.log(arrowClickLeft)
 
 arrowClickLeft.addEventListener(`click`, () => {
   select(current - 1);
