@@ -1,26 +1,30 @@
-const minRightAnswers = 10;
-const rightAnswerPoints = 100;
-const fastAnswerPoints = 50;
-const slowAnswerPoints = 50;
-const fastAnswerTime = 9;
-const slowAnswerTime = 15;
-const lifeBonus = 50;
+const MIN_RIGHT_ANSWERS = 10;
+const RIGHT_ANSWER_POINTS = 100;
+const FAST_ANSWER_POINTS = 50;
+const SLOW_ANSWER_POINTS = 50;
+const FAST_ANSWER_TIME = 9;
+const SLOW_ANSWER_TIME = 15;
+const LIFE_BONUS = 50;
 
 const countPoints = (answers, lives) => {
-  let sum = 0;
-  if (answers.length < minRightAnswers) {
-    sum = -1;
-  } else {
-    answers.forEach((el) => {
-      if (el.correctAnswer) {
-        sum += rightAnswerPoints;
-        sum += el.answerTime < fastAnswerTime ? fastAnswerPoints : 0;
-        sum -= el.answerTime > slowAnswerTime ? slowAnswerPoints : 0;
-      }
-    });
-    sum += lives * lifeBonus;
+
+  if (answers.length < MIN_RIGHT_ANSWERS) {
+    return -1;
   }
-  return sum;
+
+  answers.points = answers.reduce(
+      (acc, answer) => {
+
+        if (answer.correctAnswer) {
+          acc += RIGHT_ANSWER_POINTS;
+          acc += answer.answerTime < FAST_ANSWER_TIME ? FAST_ANSWER_POINTS : 0;
+          acc -= answer.answerTime > SLOW_ANSWER_TIME ? SLOW_ANSWER_POINTS : 0;
+        }
+        return acc;
+      }, 0
+  );
+
+  return answers.points + (lives * LIFE_BONUS);
 };
 
 export default countPoints;
