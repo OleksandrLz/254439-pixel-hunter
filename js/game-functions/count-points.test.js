@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import countPoints from './points-counter';
+import countPoints from './count-points';
 
 // function for generation arrays of answers for tests
 const generateAnswersArr = (answeredQuestions, correct, slow, fast) => {
