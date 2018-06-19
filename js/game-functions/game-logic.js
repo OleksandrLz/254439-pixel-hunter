@@ -1,3 +1,5 @@
+import {Limit, Rate} from '../data/data';
+
 export const changeLevel = (game, level) => {
   if (typeof level !== `number`) {
     throw new TypeError(`Level should be of type number`);
@@ -11,8 +13,7 @@ export const changeLevel = (game, level) => {
   return newGame;
 };
 
-
-export const canContinue = (game) => game.lives > 0 && game.level <= 10;
+export const canContinue = (game) => game.lives > 0 && game.level <= Limit.LEVELS;
 
 export const die = (game) => {
   const lives = game.lives - 1;
@@ -21,7 +22,6 @@ export const die = (game) => {
   });
 };
 
-// создает объект ответа и добавляет его в массив ответов
 export const generateStats = (answerStatus, time, arr) => {
   const answerResult = {
     correctAnswer: answerStatus,
@@ -31,13 +31,12 @@ export const generateStats = (answerStatus, time, arr) => {
   return arr;
 };
 
-// преобразует массив объектов ответов в массив вида [`fast`, `correct`]
 export const convertAnswersArr = (arr) => {
   let results = arr.map((el) => {
     let answer;
     if (el.correctAnswer) {
-      answer = el.answerTime < 10 ? `fast` : `correct`;
-      answer = el.answerTime > 20 ? `slow` : `correct`;
+      answer = el.answerTime < Limit.FAST_TIME ? `fast` : `correct`;
+      answer = el.answerTime > Limit.SLOW_TIME ? `slow` : `correct`;
     } else {
       answer = `wrong`;
     }
@@ -48,18 +47,18 @@ export const convertAnswersArr = (arr) => {
 
 export const countPointsForCorrect = (arr) => {
   const resultArr = arr.filter((el) => el.correctAnswer);
-  const sum = resultArr.length * 100;
+  const sum = resultArr.length * Rate.CORRECT_ANSWER_POINTS;
   return sum;
 };
 
 export const countFastAnswers = (arr) => {
-  const fastArr = arr.filter((el) => el.answerTime < 10);
+  const fastArr = arr.filter((el) => el.answerTime < Limit.FAST_TIME);
   const fasts = fastArr.length;
   return fasts;
 };
 
 export const countSlowAnswers = (arr) => {
-  const fastArr = arr.filter((el) => el.answerTime > 20);
+  const fastArr = arr.filter((el) => el.answerTime > Limit.SLOW_TIME);
   const fasts = fastArr.length;
   return fasts;
 };
