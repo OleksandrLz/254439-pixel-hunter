@@ -1,6 +1,7 @@
-import HeaderGameView from '../header-game-view';
+import HeaderGameView from '../header-game/header-game-view';
 import LevelView from './level-view.js';
 import Application from '../../application.js';
+import {resizeImages} from '../../game-functions/resize.js';
 
 export default class GameScreen {
   constructor(model) {
@@ -72,11 +73,12 @@ export default class GameScreen {
   }
 
   endGame() {
-    Application.showStats(this.model.state, this.model.answers);
+    Application.showStats(this.model.state, this.model.answers, this.model.playerName);
   }
 
   changeContentView(view) {
     this.root.replaceChild(view.element, this.content.element);
     this.content = view;
+    resizeImages(view.element);
   }
 }
