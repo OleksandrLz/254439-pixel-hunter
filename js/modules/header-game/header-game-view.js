@@ -1,10 +1,12 @@
-import AbstractView from './abstract-view';
-import {Limit} from '../data/data';
+import AbstractView from '../abstract-view';
+import {Limit} from '../../data/data';
 
 export default class HeaderGameView extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
+
+    this.init();
   }
 
   get template() {
@@ -20,11 +22,18 @@ export default class HeaderGameView extends AbstractView {
     ${new Array(Limit.LIVES - this.state.lives)
     .fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`)
     .join(``)}
-    ${new Array(this.state.lives)
+    ${new Array(this.state.lives - 1)
     .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`)
     .join(``)}
     </div>
   </header>`;
+  }
+
+  init() {
+    const timer = this.element.querySelector(`.game__timer`);
+    if (this.state.time < `6`) {
+      timer.classList.add(`game__timer-animate`);
+    }
   }
 
   bind() {

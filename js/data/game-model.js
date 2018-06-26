@@ -20,6 +20,25 @@ const generateAnswerStat = (answerStatus, time) => {
   return answerResult;
 };
 
+const convertAnswersArr = (arr) => {
+  let results = arr.map((el) => {
+    let answer;
+    if (el.correctAnswer) {
+      if (el.answerTime > Limit.TIME - Limit.FAST_TIME) {
+        answer = `fast`;
+      } else if (el.answerTime < Limit.TIME - Limit.SLOW_TIME) {
+        answer = `slow`;
+      } else {
+        answer = `correct`;
+      }
+    } else {
+      answer = `wrong`;
+    }
+    return answer;
+  });
+  return results;
+};
+
 class GameModel {
   constructor(data, playerName) {
     this.data = data;
@@ -32,7 +51,7 @@ class GameModel {
   }
 
   get answers() {
-    return this._answers;
+    return convertAnswersArr(this._answers);
   }
 
   generateTrueAnswer() {

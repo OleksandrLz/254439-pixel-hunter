@@ -16,33 +16,37 @@ export default class LevelView extends AbstractView {
   }
 
   bind() {
-    // одиночная игра
     if (this.level.gameType === GameType.PHOTO_OR_PICTURE_ONE) {
-      this.element.addEventListener(`input`, () => {
-        const checkedValue = this.element.querySelector(`input:checked`).value;
-        if (checkedValue === this.level.questions[0].answer) {
-          this.onAnswer(true);
-        } else {
-          this.onAnswer(false);
-        }
-      });
-    }
-    // двойная игра
-    if (this.level.gameType === GameType.PHOTO_OR_PICTURE_TWO) {
-      const contentForm = this.element.querySelector(`.game__content`);
-      this.element.addEventListener(`input`, () => {
-        const answers = Array.from(contentForm.elements).filter((element) => element.checked);
-        if (answers.length === 2) {
-          if (answers[0].value === this.level.questions[0].answer &&
-            answers[1].value === this.level.questions[1].answer) {
+      const contentForm = this.element.querySelector(`.game__content--wide`);
+      const inputs = Array.from(contentForm.elements);
+      inputs.forEach((el) => {
+        el.addEventListener(`change`, () => {
+          const checkedValue = this.element.querySelector(`input:checked`).value;
+          if (checkedValue === this.level.questions[0].answer) {
             this.onAnswer(true);
           } else {
             this.onAnswer(false);
           }
-        }
+        });
       });
     }
-    // тройная игра
+    if (this.level.gameType === GameType.PHOTO_OR_PICTURE_TWO) {
+      const contentForm = this.element.querySelector(`.game__content`);
+      const inputs = Array.from(contentForm.elements);
+      inputs.forEach((el) => {
+        el.addEventListener(`change`, () => {
+          const checkedAnswers = Array.from(contentForm.elements).filter((element) => element.checked);
+          if (checkedAnswers.length === 2) {
+            if (checkedAnswers[0].value === this.level.questions[0].answer &&
+              checkedAnswers[1].value === this.level.questions[1].answer) {
+              this.onAnswer(true);
+            } else {
+              this.onAnswer(false);
+            }
+          }
+        });
+      });
+    }
     if (this.level.gameType === GameType.FIND_ONE) {
       const tripleForm = this.element.querySelector(`.game__content--triple`);
       tripleForm.addEventListener(`click`, (evt) => {

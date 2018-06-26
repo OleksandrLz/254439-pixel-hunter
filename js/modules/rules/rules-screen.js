@@ -18,8 +18,8 @@ export default class RulesScreen {
     this.content.onBack = this.back.bind(this);
   }
 
-  click() {
-    Application.showGame(`macrell`);
+  click(name) {
+    Application.showGame(name);
   }
 
   back() {
