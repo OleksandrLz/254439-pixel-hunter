@@ -49,7 +49,7 @@ export default class RulesView extends AbstractView {
   }
 
   onClick(name) {
-      return name;
+    return name;
   }
 
   onBack() {
