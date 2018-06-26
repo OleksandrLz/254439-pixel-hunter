@@ -1,6 +1,5 @@
 import {INITIAL_GAME, Limit} from './data';
 
-
 const tick = (time) => {
   if (time > 0) {
     time--;
@@ -82,7 +81,7 @@ class GameModel {
 
   isEnd() {
     return this._state.level === Limit.LEVELS;
-   }
+  }
 
   getLevel(levelNumber) {
     return this.data[`game-${levelNumber}`];

@@ -54,9 +54,9 @@ export default class LevelView extends AbstractView {
         const questionsArr = this.level.questions;
         let correctImageSrc;
         if (this.level.description === `Найдите фото среди изображений`) {
-        correctImageSrc = questionsArr.find((question) => question.answer === `photo`).image;
+          correctImageSrc = questionsArr.find((question) => question.answer === `photo`).image;
         } else {
-        correctImageSrc = questionsArr.find((question) => question.answer === `paint`).image;
+          correctImageSrc = questionsArr.find((question) => question.answer === `paint`).image;
         }
         if (selectedImageSrc === correctImageSrc) {
           this.onAnswer(true);
