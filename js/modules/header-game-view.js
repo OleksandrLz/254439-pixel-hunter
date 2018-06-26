@@ -28,10 +28,10 @@ export default class HeaderGameView extends AbstractView {
   }
 
   bind() {
-      this.element.querySelector(`button.back`).addEventListener(`click`, () => {
-        this.onBack();
-      });
-    }
+    this.element.querySelector(`button.back`).addEventListener(`click`, () => {
+      this.onBack();
+    });
+  }
 
   onBack() {
   }

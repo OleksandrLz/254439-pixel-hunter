@@ -36,9 +36,9 @@ describe(`check points calculation`, () => {
     assert.equal(countPoints(answersArr, 1), 1050);
   });
 
-  it(`should return -1, if not all questions are answered`, () => {
+  it(`should return "Fail", if not all questions are answered`, () => {
     const answersArr = generateAnswersArr(9, 0, 0, 0);
-    assert.equal(countPoints(answersArr, 2), -1);
+    assert.equal(countPoints(answersArr, 2), `Fail`);
   });
 
   it(`should return 1000, if all answers are correct, zero lives remain`, () => {
