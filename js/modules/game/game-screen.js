@@ -3,6 +3,8 @@ import LevelView from './level-view.js';
 import Application from '../../application.js';
 import {resizeImages} from '../../game-functions/resize.js';
 
+const TIME_INTERVAL = 1000;
+
 export default class GameScreen {
   constructor(model) {
     this.model = model;
@@ -35,7 +37,7 @@ export default class GameScreen {
       } else {
         this.answer(false);
       }
-    }, 1000);
+    }, TIME_INTERVAL);
   }
 
   answer(answer) {
