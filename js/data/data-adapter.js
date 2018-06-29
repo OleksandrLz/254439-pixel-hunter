@@ -30,7 +30,7 @@ const preprocessLevel = (level) => {
 };
 
 export const adaptServerData = (data) => {
-  let newObject = {};
+  const newObject = {};
   data.map((el, index) => {
     newObject[`game-${index + 1}`] = el;
   });
