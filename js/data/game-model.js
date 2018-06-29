@@ -21,7 +21,7 @@ const generateAnswerStat = (answerStatus, time) => {
 };
 
 const convertAnswersArr = (arr) => {
-  let results = arr.map((el) => {
+  const results = arr.map((el) => {
     let answer;
     if (el.correctAnswer) {
       if (el.answerTime > Limit.TIME - Limit.FAST_TIME) {
