@@ -4,19 +4,52 @@ import gameFormTemplate from '../../templates/game-form';
 import statsTemplate from '../../templates/stats';
 import footerTemplate from '../../templates/footer';
 
+const showRightAnswerSingleGame = (debugMode, element, level) => {
+  if (debugMode) {
+    const correctInput = element.querySelector(`.game__answer--${level.questions[0].answer} input + span`);
+    if (correctInput) {
+      correctInput.classList.add(`debug`);
+    }
+  }
+};
+
+const showRightAnswersDoubleGame = (debugMode, element, level) => {
+  if (debugMode) {
+    const correctInputOne = element.querySelector(`.game__option:first-child .game__answer--${level.questions[0].answer} input + span`);
+    const correctInputTwo = element.querySelector(`.game__option:nth-child(2) .game__answer--${level.questions[1].answer} input + span`);
+    if (correctInputOne && correctInputTwo) {
+      correctInputOne.classList.add(`debug`);
+      correctInputTwo.classList.add(`debug`);
+    }
+  }
+};
+
+const showRightAnswerTripleGame = (imageSrc, debugMode, element) => {
+  if (debugMode) {
+    const images = element.querySelectorAll(`img`);
+    const correctImage = Array.from(images).find((image) => image.src === imageSrc);
+    const correctGameOption = correctImage.parentNode;
+    if (correctGameOption) {
+      correctGameOption.classList.add(`debug`);
+    }
+  }
+};
+
 export default class LevelView extends AbstractView {
   constructor(level, answers) {
     super();
     this.level = level;
     this.answers = answers;
+    this.debugMode = new URLSearchParams(document.location.search).get(`debug`) === `true`;
   }
 
   get template() {
-    return `${gameFormTemplate(this.level)}${statsTemplate(this.answers)}${footerTemplate}`;
+    return ` ${this.describeDebugMode()}${gameFormTemplate(this.level)}${statsTemplate(this.answers)}${footerTemplate}`;
   }
 
   bind() {
     if (this.level.gameType === GameType.PHOTO_OR_PICTURE_ONE) {
+      showRightAnswerSingleGame(this.debugMode, this.element, this.level);
       const contentForm = this.element.querySelector(`.game__content--wide`);
       const inputs = Array.from(contentForm.elements);
       inputs.forEach((el) => {
@@ -31,6 +64,7 @@ export default class LevelView extends AbstractView {
       });
     }
     if (this.level.gameType === GameType.PHOTO_OR_PICTURE_TWO) {
+      showRightAnswersDoubleGame(this.debugMode, this.element, this.level);
       const contentForm = this.element.querySelector(`.game__content`);
       const inputs = Array.from(contentForm.elements);
       inputs.forEach((el) => {
@@ -49,22 +83,35 @@ export default class LevelView extends AbstractView {
     }
     if (this.level.gameType === GameType.FIND_ONE) {
       const tripleForm = this.element.querySelector(`.game__content--triple`);
+      const questionsArr = this.level.questions;
+      let correctImageSrc;
+      if (this.level.description === `Найдите фото среди изображений`) {
+        correctImageSrc = questionsArr.find((question) => question.answer === `photo`).image;
+        showRightAnswerTripleGame(correctImageSrc, this.debugMode, this.element);
+      } else {
+        correctImageSrc = questionsArr.find((question) => question.answer === `paint`).image;
+        showRightAnswerTripleGame(correctImageSrc, this.debugMode, this.element);
+      }
       tripleForm.addEventListener(`click`, (evt) => {
         const selectedImageSrc = evt.target.querySelector(`img`).getAttribute(`src`);
-        const questionsArr = this.level.questions;
-        let correctImageSrc;
+        const questionArr = this.level.questions;
+        let correctImage;
         if (this.level.description === `Найдите фото среди изображений`) {
-          correctImageSrc = questionsArr.find((question) => question.answer === `photo`).image;
+          correctImage = questionArr.find((question) => question.answer === `photo`).image;
         } else {
-          correctImageSrc = questionsArr.find((question) => question.answer === `paint`).image;
+          correctImage = questionArr.find((question) => question.answer === `paint`).image;
         }
-        if (selectedImageSrc === correctImageSrc) {
+        if (selectedImageSrc === correctImage) {
           this.onAnswer(true);
         } else {
           this.onAnswer(false);
         }
       });
     }
+  }
+
+  describeDebugMode() {
+    return this.debugMode ? `<div class="debug">Debug mode. The correct answers are highlighted with a yellow border</div>` : ``;
   }
 
   onAnswer(answer) {
