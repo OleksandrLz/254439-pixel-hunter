@@ -1,12 +1,11 @@
 .stats {
   padding: 0;
-
   list-style: none;
   font-size: 0;
-
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .stats__result {

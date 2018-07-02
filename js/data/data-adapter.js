@@ -1,13 +1,12 @@
 import {GameType} from './data';
 
-
-const ServerGameTypeMapper = {
+const ServerGameTypeMap = {
   'two-of-two': GameType.PHOTO_OR_PICTURE_TWO,
   'tinder-like': GameType.PHOTO_OR_PICTURE_ONE,
   'one-of-three': GameType.FIND_ONE
 };
 
-const ServerPictureTypeMapper = {
+const ServerPictureTypeMap = {
   painting: `paint`,
   photo: `photo`
 };
@@ -15,7 +14,7 @@ const ServerPictureTypeMapper = {
 const preprocessLevel = (level) => {
   level.description = level.question;
   delete level.question;
-  level.gameType = ServerGameTypeMapper[level.type];
+  level.gameType = ServerGameTypeMap[level.type];
   delete level.type;
   level.questions = level.answers;
   delete level.answers;
@@ -24,18 +23,17 @@ const preprocessLevel = (level) => {
     el.width = el.image.width;
     el.height = el.image.height;
     el.image = el.image.url;
-    el.answer = ServerPictureTypeMapper[el.type];
+    el.answer = ServerPictureTypeMap[el.type];
     delete el.type;
   });
 };
 
 export const adaptServerData = (data) => {
-  const newObject = {};
+  let newObject = {};
   data.map((el, index) => {
     newObject[`game-${index + 1}`] = el;
   });
-  for (let level of Object.values(newObject)) {
-    level = preprocessLevel(level);
-  }
+  Object.keys(newObject).map((key) => preprocessLevel(newObject[key]));
+
   return newObject;
 };

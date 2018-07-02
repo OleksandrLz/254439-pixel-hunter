@@ -1,7 +1,7 @@
 .intro__place {
   z-index: 2;
   opacity: 1;
-  transition: 3s linear;
+  transition: 0.5s linear;
   &-animate {
     opacity: 0;
   }
@@ -15,7 +15,7 @@
   z-index: 1;
   opacity: 0;
   &-animate {
-    animation: fadein 3s linear;
+    animation: fadein 0.5s linear;
     animation-fill-mode: forwards;
   }
 }

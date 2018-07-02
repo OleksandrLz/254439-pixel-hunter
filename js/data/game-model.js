@@ -20,8 +20,9 @@ const generateAnswerStat = (answerStatus, time) => {
   return answerResult;
 };
 
+// преобразует массив объектов ответов в массив вида [`fast`, `correct`]
 const convertAnswersArr = (arr) => {
-  const results = arr.map((el) => {
+  let results = arr.map((el) => {
     let answer;
     if (el.correctAnswer) {
       if (el.answerTime > Limit.TIME - Limit.FAST_TIME) {
@@ -62,7 +63,7 @@ class GameModel {
     this._answers.push(generateAnswerStat(false, this._state.time));
   }
 
-  nextLevel() {
+  goToNextLevel() {
     this._state.level++;
   }
 
@@ -102,7 +103,6 @@ class GameModel {
   isTimeEnd() {
     return this._state.time === 0;
   }
-
 }
 
 export default GameModel;
