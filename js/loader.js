@@ -1,7 +1,6 @@
 import {adaptServerData} from './data/data-adapter.js';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
-
 const DEFAULT_NAME = `leo`;
 const APP_ID = 45645645;
 
@@ -37,6 +36,7 @@ export default class Loader {
       },
       method: `POST`
     };
+
     return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, requestSettings).then(checkStatus);
   }
 }

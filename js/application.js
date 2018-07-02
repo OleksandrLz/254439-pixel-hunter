@@ -4,21 +4,21 @@ import RulesScreen from './modules/rules/rules-screen.js';
 import GameScreen from './modules/game/game-screen.js';
 import StatsScreen from './modules/stats/stats-screen.js';
 import GameModel from './data/game-model.js';
-import ModalErrorView from './modules/modal-error/modal-error.js';
+import ModalErrorView from './modules/modal-error/modal-error-view.js';
 import ScoreboardView from './modules/scoreboard/scoreboard-view.js';
 import ModalConfirmElement from './modules/modal-confirm/modal-confirm-element.js';
 import Loader from './loader.js';
 
-const ANIMATION_OUT = 3500;
+const ANIMATION_OUT = 2500;
 
 const main = document.querySelector(`main.central`);
+
+let questData;
 
 const changeView = (element) => {
   main.innerHTML = ``;
   main.appendChild(element);
 };
-
-let questData;
 
 const removeIntro = () => {
   const introPlace = document.querySelector(`.intro__place`);
@@ -48,10 +48,12 @@ export default class Application {
   }
 
   static showGreetingAnimation() {
+    const introPlace = document.querySelector(`.intro__place`);
+    const introAsterisk = introPlace.querySelector(`.intro__asterisk`);
+    introAsterisk.classList.remove(`intro__asterisk-rotate`);
     const greeting = new GreetingScreen();
     main.appendChild(greeting.element);
     greeting.element.classList.add(`greeting__place-animate`);
-    const introPlace = document.querySelector(`.intro__place`);
     introPlace.classList.add(`intro__place-animate`);
     setTimeout(removeIntro, ANIMATION_OUT);
   }
